@@ -4,10 +4,12 @@ Java Spring Vulny is a simple application that combines the power and sophistica
 
 ## Building and Running in IDE/commandline
 ```shell script
-# run the postgreql db so you can have SQLi
+# run the postgresql db so you can have SQLi
 docker-compose up -d db
 # run the application in debug mode or run mode with the vm option to activate the profile
 # -Dspring.profiles.active=postgresql
+
+./gradlew --no-daemon bootRun --args='--spring.profiles.active=postgresql'
 ```
 
 ## Building and Running in Docker
@@ -34,6 +36,29 @@ docker-compose up -d
 ./gradlew --no-daemon bootRun
 ```
 
+## Building and Running on Windows
+```shell script
+./gradlew.bat bootRun --args='--spring.profiles.active=windows'
+```
+
+### Build
+
+In PowerShell, with administrative privileges:
+
+1. [Install gradle](https://docs.gradle.org/current/userguide/installation.html#microsoft_windows_users)
+   1. unpack zip file
+   2. add the new gradle directory to `$env:PATH`
+2. Run the gradle build:
+   1. `.\gradlew.bat --no-daemon build`
+3. Update the `spring.datasource.url` in your local [application.yaml](https://github.com/kaakaww/javaspringvulny/blob/main/src/main/resources/application.properties) file from `spring.datasource.url=jdbc:h2:file:${PWD}/db/vulny;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE` to an absolute path.
+   1. For instance: `spring.datasource.url: jdbc:h2:file:C:/Users/Dan/projects/javaspringvulny/db/vulny;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE`.
+
+### Run
+
+```shell script
+.\gradlew.bat --no-daemon bootRun
+```
+
 ## Using the Application
 
 ### Reaching the App
@@ -44,7 +69,7 @@ Once the app starts up, you can reach it at [https://localhost:9000](https://loc
 You can log in to the application with the following credentials:
 
 ```
-    username: user
+    username: janesmith
     password: password
 ```
 
@@ -150,9 +175,15 @@ docker run --tty --rm --network host --volume $(pwd):/hawk \
   stackhawk/hawkscan stackhawk.d/stackhawk.yml stackhawk.d/stackhawk-auth-basic.yml
 ```
 
+## Examples
+
+Here are examples of how to use HawkScan with differently configured applications and CICD pipelines.
+
 ### Example Specs
 
-By default HawkScan will run with the `stackhawk.yml` file if it's defined and present, but can instead use named specs such as `hawk scan stackhawk.yml`
+By default running `hawk scan` will run with the `stackhawk.yml` file in the same directory if it's defined and present, but can instead use named specs such as `hawk scan stackhawk-openapi.yml`. HawkScan also supports layering of multiple specs, such as `hawk scan stackhawk-base.yml stackhawk-windows-custom.yml` for a combined configuration.
+
+Look for these in the [stackhawk.d](https://github.com/kaakaww/javaspringvulny/tree/main/stackhawk.d) directory: 
 
 `stackhawk-openapi.yml` - scan with OpenAPI configuration
 `stackhawk-custom-spider-curl.yml` scan with custom discovery using curl
@@ -161,3 +192,10 @@ By default HawkScan will run with the `stackhawk.yml` file if it's defined and p
 `stackhawk-jsv-form-cookie.yml` scan with form authentication and cookie authorization
 `stackhawk-jsv-json-token` scan with JSON authentication and token authorization
 `stackhawk-ajax.yml` - scan with the ajax spider
+
+### Example Pipelines
+
+These are example CICD pipelines to refer to:
+
+[github actions](https://github.com/kaakaww/javaspringvulny/blob/main/.github/workflows/hawkscan.yml)
+[azure-pipelines](https://github.com/kaakaww/javaspringvulny/blob/main/azure-pipelines.yml)
