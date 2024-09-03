@@ -1,5 +1,6 @@
 name: HawkScan
-
+on:
+  push
 jobs:
   hawkscan:
     name: HawkScan
@@ -19,13 +20,11 @@ jobs:
         uses: stackhawk/hawkscan-action@main
         with:
           apiKey: ${{ secrets.HAWK_API_KEY }}
-          sourceURL: https://download.stackhawk.com/dev/hawk/cli
-          version: 3.5.28
         env:
-          APP_ID: ${{ secrets.appId }}
+          APP_ID: 9fe41c6b-6a52-461f-afd8-27b8530159fe
           SARIF_ARTIFACT: true
       - name: Collect hawkscan log
         uses: actions/upload-artifact@v4
         with:
           name: stackhawk_logs
-          path: "~/.hawk/sessions/*/hawkscan.log"
+          path: .hawk/sessions/**/hawkscan.log
