@@ -24,3 +24,8 @@ jobs:
         env:
           APP_ID: ${{ secrets.appId }}
           SARIF_ARTIFACT: true
+      - name: Collect hawkscan log
+        uses: actions/upload-artifact@v4
+        with:
+          name: stackhawk_logs
+          path: "~/.hawk/sessions/*/hawkscan.log"
