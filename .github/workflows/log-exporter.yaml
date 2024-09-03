@@ -6,11 +6,12 @@ jobs:
     name: HawkScan
     runs-on: ubuntu-latest
     steps:
-      - name: Java update
       - uses: actions/setup-java@v4
+      - name: Java versioning
         with:
           distribution: 'temurin'
           java-version: '17'
+
       - uses: actions/checkout@v2
       - name: Download and run JavaSpringVulny release jar
         run: |
