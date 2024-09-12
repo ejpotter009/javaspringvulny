@@ -25,4 +25,4 @@ app:
         - "JSESSIONID"
     testPath:
       path: /search
-      success: '.*'
+      success: '.*200.*'
