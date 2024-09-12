@@ -19,6 +19,9 @@ jobs:
 #        run: |
 #          ./gradlew build
 #          ./gradlew bootRun &
+      - name: Get the Repo
+        uses: actions/checkout@v4
+        
       - name: Run HawkScan
         id: run-hawkscan
         uses: stackhawk/hawkscan-action@main
