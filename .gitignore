@@ -8,9 +8,11 @@ bin/
 .settings/
 .env
 .DS_Store
-<<<<<<< HEAD
 api.key
 api_call.py
-=======
 *.iml
->>>>>>> 9bc286cfec78a9beb2d56684da42d867bf82ba78
+notes*
+*.swp
+*~
+stackhawk.d/*~
+stackhawk.d/*.swp
