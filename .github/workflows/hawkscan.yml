@@ -16,9 +16,10 @@ jobs:
         APP_HOST: 'http://localhost:5000'
         APP_ID: AE624DB7-11FC-4561-B8F2-2C8ECF77C2C7
         APP_ENV: Development
+        APP_SPEC: /openapi
       uses: stackhawk/hawkscan-action@v2.2.0
       with:
         apiKey: ${{ secrets.HAWK_API_KEY }}
         configurationFiles: |
-          stackhawk.yml
-          stackhawk-extras.yml
+          https://raw.githubusercontent.com/ejpotter009/javaspringvulny/refs/heads/main/stackhawk-rea.yml
+          # stackhawk-extras.yml
